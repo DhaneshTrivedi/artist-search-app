@@ -14,7 +14,7 @@ input.addEventListener('input', () => {
   resultsBox.innerHTML = '<p>Searching...</p>';
 
   timeout = setTimeout(() => {
-    fetch(`/artist-search-app/api/search.php?q=${encodeURIComponent(query)}`)
+   fetch(`/api/search.php?q=${encodeURIComponent(query)}`)
       .then(res => res.json())
       .then(data => {
         resultsBox.innerHTML = '';

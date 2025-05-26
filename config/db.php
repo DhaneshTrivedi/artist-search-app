@@ -1,8 +1,9 @@
 <?php
-$host = 'localhost';
-$db   = 'music_artists_db';
-$user = 'root';
-$pass = ''; // default XAMPP password is blank
+$host = "shuttle.proxy.rlwy.net";
+$port = 47299;
+$username = "root";
+$password = "aFYqEPKSyNOHSrdnNNEyCMdjWxmxUKyt";
+$dbname = "railway";
 
 try {
     $pdo = new PDO("mysql:host=$host;dbname=$db;charset=utf8mb4", $user, $pass);

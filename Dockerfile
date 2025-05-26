@@ -16,12 +16,12 @@ RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-av
 # Copy all project files
 COPY . /var/www/html
 
-# 🔥 Fix permissions — this is the key!
+# 🔥 Fix permissions
 RUN chown -R www-data:www-data /var/www/html \
     && chmod -R 755 /var/www/html
 
-# Install MySQLi extension
-RUN docker-php-ext-install mysqli
+# ✅ Install both mysqli AND pdo_mysql
+RUN docker-php-ext-install mysqli pdo_mysql
 
 # Expose default port
 EXPOSE 80

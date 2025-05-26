@@ -1,17 +1,23 @@
-# Use PHP-Apache base image
-FROM php:8.2-apache
+FROM php:8.1-apache
 
-# Enable mod_rewrite for Apache (if needed)
+# Enable mod_rewrite (optional, good for pretty URLs)
 RUN a2enmod rewrite
 
-# Copy project files into container
-COPY . /var/www/html/
+# Set the working directory
+WORKDIR /var/www/html
 
-# Install MySQL extension
-RUN docker-php-ext-install mysqli pdo pdo_mysql
+# Set the document root to /var/www/html/public
+ENV APACHE_DOCUMENT_ROOT=/var/www/html/public
 
-# Set working directory
-WORKDIR /var/www/html/
+# Update the Apache config with the new document root
+RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-available/000-default.conf \
+    && sed -ri -e 's!/var/www/!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/apache2.conf
 
-# Expose default web port
+# Copy the full project
+COPY . /var/www/html
+
+# Install MySQLi extension
+RUN docker-php-ext-install mysqli
+
+# Expose the default Apache port
 EXPOSE 80
